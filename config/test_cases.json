@@ -3,35 +3,35 @@
     "id": "TC01",
     "type": "direct_query",
     "question": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
-    "expected_behavior": "Chatbot trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "expected_behavior": "Agent trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
     "complexity": "Low"
   },
   {
     "id": "TC02",
     "type": "single_tool_query",
-    "question": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
-    "expected_behavior": "Agent nhận diện nhu cầu tra cứu, tự động phát sinh Tool Call 'academic_query' với mã SV2026001.",
+    "question": "Hãy tra cứu thông tin học vụ và điểm GPA của sinh viên SV2026002.",
+    "expected_behavior": "Agent gọi Tool 'academic_query' với mã SV2026002, trả về hồ sơ gồm GPA, lớp, cố vấn, môn học.",
     "complexity": "Medium"
   },
   {
     "id": "TC03",
-    "type": "appointment_booking",
-    "question": "Tôi là sinh viên SV2026001, muốn đặt lịch hẹn tư vấn học vụ với PGS.TS Nguyễn Văn A vào lúc 14:00 ngày 15/09/2026.",
-    "expected_behavior": "Agent tự động phát sinh Tool Call 'schedule_appointment' với mã sinh viên SV2026001, thời gian 14:00 ngày 15/09/2026 và cố vấn PGS.TS Nguyễn Văn A.",
-    "complexity": "Medium"
+    "type": "multi_step_exam_query",
+    "question": "Tôi là sinh viên SV2026003, muốn xem lịch thi của mình trong tháng 9.",
+    "expected_behavior": "Agent thực hiện 2 bước: Bước 1 gọi 'academic_query' xác nhận SV2026003 tồn tại, Bước 2 gọi 'exam_schedule_query' tra cứu lịch thi.",
+    "complexity": "High"
   },
   {
     "id": "TC04",
-    "type": "multi_step_reasoning",
-    "question": "Hãy kiểm tra giúp tôi ai là Cố vấn học tập của sinh viên SV2026001, sau đó tiến hành đặt lịch hẹn tư vấn cho sinh viên này với cố vấn đó vào lúc 09:30 ngày 20/09/2026.",
-    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct đa bước: Trước tiên gọi 'academic_query' tra cứu tên Cố vấn của SV2026001, sau đó dùng kết quả thu được để gọi 'schedule_appointment' đặt lịch.",
+    "type": "multi_step_appointment",
+    "question": "Hãy tra cứu cố vấn học tập của sinh viên SV2026001, sau đó đặt lịch hẹn tư vấn cho sinh viên này với cố vấn đó vào lúc 09:30 ngày 20/09/2026.",
+    "expected_behavior": "Agent thực hiện 2 bước: Bước 1 gọi 'academic_query' lấy tên cố vấn (PGS.TS Nguyễn Văn A), Bước 2 gọi 'schedule_appointment' đặt lịch với đúng cố vấn.",
     "complexity": "High"
   },
   {
     "id": "TC05",
     "type": "edge_case_handling",
-    "question": "Hãy tra cứu điểm GPA và hồ sơ học vụ của sinh viên có mã SV9999999.",
-    "expected_behavior": "Agent phát sinh Tool Call 'academic_query' với mã SV9999999, nhận kết quả NOT_FOUND từ MCP Server và trả lời lịch sự, chính xác rằng không tìm thấy sinh viên mà không bịa đặt dữ liệu.",
+    "question": "Hãy tra cứu lịch thi của sinh viên có mã SV9999999.",
+    "expected_behavior": "Agent gọi 'academic_query' với SV9999999, nhận NOT_FOUND, dừng lại và phản hồi lịch sự rằng sinh viên không tồn tại mà không bịa đặt dữ liệu hay gọi thêm Tool khác.",
     "complexity": "Medium"
   }
 ]
